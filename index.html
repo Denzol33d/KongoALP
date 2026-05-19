@@ -111,11 +111,11 @@ body{
 .toast-body{color:#fca5a5;font-size:14px;line-height:1.6;}
 .toast-amount{color:#fbbf24;font-family:'Orbitron',monospace;font-size:22px;font-weight:900;display:block;margin-top:8px;}
 
-.tabs{display:flex;gap:6px;background:#0d0d16;border:1px solid #1e1e2e;border-radius:14px;padding:5px;margin-bottom:24px;}
+.tabs{display:flex;gap:4px;background:#0d0d16;border:1px solid #1e1e2e;border-radius:14px;padding:5px;margin-bottom:24px;}
 .tab{
-  flex:1;padding:10px;border:none;border-radius:10px;background:transparent;
-  color:#4b5563;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;
-  letter-spacing:1.5px;cursor:pointer;transition:.25s;text-transform:uppercase;
+  flex:1;padding:10px 4px;border:none;border-radius:10px;background:transparent;
+  color:#4b5563;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:1px;cursor:pointer;transition:.25s;text-transform:uppercase;
 }
 .tab.active{background:#160b2c;color:#c084fc;border:1px solid rgba(124,58,237,.35);}
 .tab:hover:not(.active){color:#9ca3af;background:#13131e;}
@@ -171,6 +171,182 @@ body{
 .mine-status.done{color:#f87171;}
 .bomb-info{display:flex;align-items:center;gap:10px;background:#0d0d16;border:1px solid #1a1a2e;border-radius:10px;padding:10px 20px;font-size:13px;color:#6b7280;}
 .bomb-info .bnum{font-family:'Orbitron',monospace;font-size:20px;color:#f87171;font-weight:700;}
+
+/* ===== CHICKEN ROAD ===== */
+.chicken-wrap{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;}
+
+.chicken-road-scene{
+  width:100%;
+  background:linear-gradient(180deg,#1a0e2e 0%,#0d1a10 100%);
+  border:1px solid #1e1e35;
+  border-radius:18px;
+  padding:16px 10px;
+  position:relative;
+  overflow:hidden;
+  min-height:130px;
+}
+.road-stripe{
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:repeating-linear-gradient(90deg,#fbbf24 0,#fbbf24 18px,transparent 18px,transparent 36px);
+  opacity:.15;
+}
+
+/* Road track */
+.road-track{
+  display:flex;
+  align-items:flex-end;
+  gap:6px;
+  width:100%;
+  overflow-x:hidden;
+  padding-bottom:4px;
+  position:relative;
+}
+
+/* Chicken character */
+.chicken-char{
+  font-size:36px;
+  line-height:1;
+  position:relative;
+  flex-shrink:0;
+  transition:transform .3s ease;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.5));
+}
+.chicken-char.hop{animation:chickenHop .3s ease-in-out;}
+@keyframes chickenHop{
+  0%{transform:translateY(0) scaleX(1);}
+  40%{transform:translateY(-14px) scaleX(.95);}
+  70%{transform:translateY(-6px) scaleX(1.05);}
+  100%{transform:translateY(0) scaleX(1);}
+}
+.chicken-char.burn{animation:chickenBurn .5s ease-in-out forwards;}
+@keyframes chickenBurn{
+  0%{transform:scale(1);filter:drop-shadow(0 4px 8px rgba(0,0,0,.5));}
+  50%{transform:scale(1.3) rotate(15deg);filter:drop-shadow(0 0 20px #ef4444);}
+  100%{transform:scale(0) rotate(45deg);opacity:0;filter:drop-shadow(0 0 30px #dc2626);}
+}
+
+/* Manhole / well circles */
+.manhole{
+  width:54px;height:54px;
+  border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,#3a3a3a,#1a1a1a,#0a0a0a);
+  border:3px solid #4a4a4a;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  position:relative;
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 2px 4px rgba(0,0,0,.5);
+  transition:border-color .4s,box-shadow .4s;
+}
+.manhole::before{
+  content:'';
+  position:absolute;inset:4px;
+  border-radius:50%;
+  background:repeating-conic-gradient(#2a2a2a 0deg 10deg,#1e1e1e 10deg 20deg);
+  opacity:.7;
+}
+.manhole::after{
+  content:'';
+  position:absolute;
+  width:70%;height:4px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+  top:12px;border-radius:2px;
+}
+.manhole .mh-coeff{
+  position:relative;z-index:2;
+  font-family:'Orbitron',monospace;
+  font-size:10px;font-weight:700;
+  color:#8a8a9a;
+  text-align:center;
+  text-shadow:0 1px 3px rgba(0,0,0,.9);
+  transition:color .4s,font-size .3s;
+}
+.manhole.reached{
+  border-color:#fbbf24;
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 0 20px rgba(251,191,36,.4),0 0 40px rgba(251,191,36,.15);
+  animation:mhglow .6s ease-in-out;
+}
+.manhole.reached .mh-coeff{color:#fbbf24;font-size:11px;}
+@keyframes mhglow{
+  0%{box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 0 0 rgba(251,191,36,0);}
+  50%{box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 0 30px rgba(251,191,36,.6),0 0 60px rgba(251,191,36,.25);}
+  100%{box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 0 20px rgba(251,191,36,.4),0 0 40px rgba(251,191,36,.15);}
+}
+.manhole.safe-passed{
+  border-color:#4ade80;
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 0 14px rgba(74,222,128,.3);
+}
+.manhole.safe-passed .mh-coeff{color:#4ade80;}
+.manhole.danger{
+  border-color:#ef4444;
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 0 16px rgba(239,68,68,.4);
+  animation:mhdanger .4s ease;
+}
+@keyframes mhdanger{
+  0%,100%{transform:scale(1);}50%{transform:scale(1.08);}
+}
+
+/* Result banner */
+.chicken-result{
+  background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(124,58,237,.08));
+  border:1px solid rgba(251,191,36,.25);
+  border-radius:16px;
+  padding:18px 16px;
+  text-align:center;
+  width:100%;
+  animation:fadein .4s ease;
+}
+.chicken-result .cr-label{font-size:11px;color:#6b7280;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.chicken-result .cr-manhole{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;color:#fbbf24;margin-bottom:4px;}
+.chicken-result .cr-coeff{font-family:'Orbitron',monospace;font-size:18px;color:#a855f7;}
+.chicken-result .cr-sub{font-size:13px;color:#6b7280;margin-top:8px;line-height:1.6;}
+
+.chicken-status{
+  font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#6b7280;
+  text-align:center;min-height:18px;font-weight:600;
+  transition:color .3s;
+}
+.chicken-status.analyzing{color:#c084fc;animation:cblink .5s infinite alternate;}
+.chicken-status.done{color:#fbbf24;}
+
+/* Multiplier display row */
+.cr-multipliers{
+  display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px;
+}
+.cr-mult-badge{
+  background:#0d0d16;border:1px solid #1e1e2e;border-radius:8px;
+  padding:4px 8px;font-family:'Orbitron',monospace;font-size:10px;color:#4b5563;
+  transition:all .3s;
+}
+.cr-mult-badge.active{background:#160b2c;border-color:#7c3aed;color:#c084fc;}
+.cr-mult-badge.passed{background:#061208;border-color:#16a34a;color:#4ade80;}
+.cr-mult-badge.target{background:#1a1200;border-color:#fbbf24;color:#fbbf24;
+  box-shadow:0 0 12px rgba(251,191,36,.25);}
+
+.chicken-btn{
+  width:100%;border:none;padding:16px;border-radius:14px;
+  font-size:15px;font-weight:700;font-family:'Rajdhani',sans-serif;
+  letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.25s;
+  background:linear-gradient(90deg,#d97706,#f59e0b,#d97706);
+  background-size:200% 100%;
+  color:#1a0a00;
+  box-shadow:0 8px 25px rgba(217,119,6,.3);
+  position:relative;overflow:hidden;
+}
+.chicken-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+  transform:translateX(-100%);
+  transition:transform .5s;
+}
+.chicken-btn:hover:not(:disabled)::before{transform:translateX(100%);}
+.chicken-btn:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:0 12px 35px rgba(217,119,6,.45);
+  background-position:100% 0;
+}
+.chicken-btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;}
+
+/* ===== end chicken ===== */
 
 .big-icon{font-size:64px;text-align:center;margin-bottom:14px;}
 .limit-title{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:#fbbf24;text-align:center;letter-spacing:2px;margin-bottom:16px;text-transform:uppercase;}
@@ -237,8 +413,10 @@ body{
     <div class="tabs">
       <button class="tab active" id="tab-avi" onclick="switchTab('avi')">✈ Aviateur</button>
       <button class="tab" id="tab-mine" onclick="switchTab('mine')">💣 Mines</button>
+      <button class="tab" id="tab-chicken" onclick="switchTab('chicken')">🐔 Chicken</button>
     </div>
 
+    <!-- AVIATOR -->
     <div id="panel-avi">
       <div class="avi-wrap">
         <div class="coeff-ring" id="coeff-ring">
@@ -254,6 +432,7 @@ body{
       </div>
     </div>
 
+    <!-- MINES -->
     <div id="panel-mine" class="hidden">
       <div class="mines-wrap">
         <div class="bomb-info">💣 Mines : <span class="bnum" id="bnum">—</span></div>
@@ -263,8 +442,42 @@ body{
         <button class="btn btn-purple" id="mine-btn" onclick="getMines()" style="max-width:280px;">💣 Détecter les mines</button>
       </div>
     </div>
+
+    <!-- CHICKEN ROAD -->
+    <div id="panel-chicken" class="hidden">
+      <div class="chicken-wrap">
+
+        <!-- Road scene -->
+        <div class="chicken-road-scene" id="chickenScene">
+          <div class="road-stripe"></div>
+          <div style="font-size:10px;color:#4b5563;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:12px;">🐔 Chicken Road — Prédiction</div>
+          <div class="road-track" id="roadTrack">
+            <!-- generated by JS -->
+          </div>
+        </div>
+
+        <!-- Multiplier badges -->
+        <div class="cr-multipliers" id="crBadges"></div>
+
+        <!-- Status -->
+        <div class="chicken-status" id="chickenStatus">Appuyez pour analyser</div>
+
+        <!-- Result -->
+        <div class="chicken-result hidden" id="chickenResult">
+          <div class="cr-label">La poule ira jusqu'au</div>
+          <div class="cr-manhole" id="crManhole">—</div>
+          <div class="cr-coeff" id="crCoeff">—</div>
+          <div class="cr-sub" id="crSub">Misez avant que la poule parte !</div>
+        </div>
+
+        <button class="chicken-btn" id="chicken-btn" onclick="getChicken()">
+          🐔 Prédire le parcours
+        </button>
+      </div>
+    </div>
   </div>
 
+  <!-- PAYMENT SCREEN -->
   <div id="s3" class="card hidden">
     <div class="steps">
       <div class="step-dot done"></div>
@@ -297,13 +510,14 @@ body{
 <script>
 const REF_LINK = 'https://refpa69905.com/L?tag=d_5160092m_64375c_&site=5160092&ad=64375&r=registration?bonus=casino';
 
-let aviLeft = 1, mineLeft = 1;
-let aviAnalyzing = false, mineAnalyzing = false;
+let aviLeft = 1, mineLeft = 1, chickenLeft = 1;
+let aviAnalyzing = false, mineAnalyzing = false, chickenAnalyzing = false;
 let paymentRequired = false;
 
 document.getElementById('registerBtn').href = REF_LINK;
 document.getElementById('depositBtn').href = REF_LINK;
 
+// Build mines grid
 const mgrid = document.getElementById('mgrid');
 for(let i=0;i<25;i++){
   const c=document.createElement('div');
@@ -311,6 +525,50 @@ for(let i=0;i<25;i++){
   mgrid.appendChild(c);
 }
 
+// ===== CHICKEN ROAD SETUP =====
+const CHICKEN_COEFFS = [9.09, 15.30, 26.78, 48.70, 92.54, 185.08];
+const NUM_MANHOLES = CHICKEN_COEFFS.length;
+
+function buildRoadTrack(){
+  const track = document.getElementById('roadTrack');
+  track.innerHTML = '';
+
+  // Chicken
+  const chick = document.createElement('div');
+  chick.className = 'chicken-char';
+  chick.id = 'chickenChar';
+  chick.textContent = '🐔';
+  track.appendChild(chick);
+
+  // Manholes
+  for(let i=0; i<NUM_MANHOLES; i++){
+    const mh = document.createElement('div');
+    mh.className = 'manhole';
+    mh.id = 'mh'+i;
+    const coeff = document.createElement('div');
+    coeff.className = 'mh-coeff';
+    coeff.textContent = CHICKEN_COEFFS[i]+'x';
+    mh.appendChild(coeff);
+    track.appendChild(mh);
+  }
+}
+
+function buildBadges(){
+  const badges = document.getElementById('crBadges');
+  badges.innerHTML = '';
+  for(let i=0; i<NUM_MANHOLES; i++){
+    const b = document.createElement('div');
+    b.className = 'cr-mult-badge';
+    b.id = 'badge'+i;
+    b.textContent = CHICKEN_COEFFS[i]+'x';
+    badges.appendChild(b);
+  }
+}
+
+buildRoadTrack();
+buildBadges();
+
+// ===== TOAST =====
 let toastTimer=null;
 function showToast(){
   const t=document.getElementById('toast');
@@ -326,6 +584,7 @@ function requirePayment(){
   setTimeout(()=>{ go('s2','s3'); }, 700);
 }
 
+// ===== ID CHECK =====
 function checkID(){
   const v=document.getElementById('idInput').value.trim();
   const err=document.getElementById('idErr');
@@ -335,7 +594,7 @@ function checkID(){
 }
 
 function switchTab(t){
-  ['avi','mine'].forEach(x=>{
+  ['avi','mine','chicken'].forEach(x=>{
     document.getElementById('tab-'+x).classList.toggle('active',x===t);
     document.getElementById('panel-'+x).classList.toggle('hidden',x!==t);
   });
@@ -345,6 +604,7 @@ function getRandCoeff(){
   return Math.round((1.5+Math.random()*11.5)*100)/100;
 }
 
+// ===== AVIATOR =====
 function getCoeff(){
   if(aviAnalyzing)return;
   if(paymentRequired || aviLeft<=0){requirePayment();return;}
@@ -383,6 +643,7 @@ function getCoeff(){
   },2000+Math.random()*900);
 }
 
+// ===== MINES =====
 function getMines(){
   if(mineAnalyzing)return;
   if(paymentRequired || mineLeft<=0){requirePayment();return;}
@@ -447,6 +708,164 @@ function getMines(){
   },delay);
 }
 
+// ===== CHICKEN ROAD =====
+function resetChickenScene(){
+  buildRoadTrack();
+  buildBadges();
+  const chick = document.getElementById('chickenChar');
+  if(chick) chick.textContent = '🐔';
+  for(let i=0;i<NUM_MANHOLES;i++){
+    const mh = document.getElementById('mh'+i);
+    if(mh) mh.className='manhole';
+    const badge = document.getElementById('badge'+i);
+    if(badge) badge.className='cr-mult-badge';
+  }
+}
+
+function getChicken(){
+  if(chickenAnalyzing)return;
+  if(paymentRequired || chickenLeft<=0){requirePayment();return;}
+
+  chickenAnalyzing = true;
+  const btn = document.getElementById('chicken-btn');
+  const status = document.getElementById('chickenStatus');
+  const result = document.getElementById('chickenResult');
+
+  btn.disabled = true;
+  result.classList.add('hidden');
+  status.className = 'chicken-status analyzing';
+  status.textContent = 'Analyse du comportement...';
+
+  resetChickenScene();
+
+  // Pick a random target manhole index (weighted toward middle)
+  // Bias: lower indices more likely (harder to reach far)
+  const weights = [0.30, 0.25, 0.20, 0.13, 0.08, 0.04];
+  let rand = Math.random();
+  let targetIdx = NUM_MANHOLES - 1;
+  let acc = 0;
+  for(let i=0;i<weights.length;i++){
+    acc += weights[i];
+    if(rand < acc){targetIdx = i; break;}
+  }
+
+  const stages = [
+    'Scan du terrain...',
+    'Calcul de trajectoire...',
+    'Modélisation du risque...',
+    'Prédiction finalisée !'
+  ];
+  let si = 0;
+  const totalDelay = 2800 + Math.random() * 900;
+  const stageInterval = Math.floor(totalDelay / stages.length);
+  const stIv = setInterval(()=>{
+    if(si < stages.length) status.textContent = stages[si++];
+  }, stageInterval);
+
+  setTimeout(()=>{
+    clearInterval(stIv);
+    status.className = 'chicken-status';
+    status.textContent = '';
+
+    // Animate chicken hopping through manholes one by one
+    animateChicken(targetIdx, ()=>{
+      // Show result
+      const targetCoeff = CHICKEN_COEFFS[targetIdx];
+      const mhNum = targetIdx + 1;
+
+      document.getElementById('crManhole').textContent = `Colonne #${mhNum}`;
+      document.getElementById('crCoeff').textContent = `Coefficient : ${targetCoeff}x`;
+      document.getElementById('crSub').textContent =
+        targetIdx >= 3
+          ? `🔥 Excellent ! La poule va très loin — misez gros !`
+          : `✅ Prédiction fiable — misez sur cette case !`;
+
+      result.classList.remove('hidden');
+      status.className = 'chicken-status done';
+      status.textContent = `🐔 S'arrête au puits #${mhNum}`;
+
+      chickenLeft--;
+      chickenAnalyzing = false;
+      btn.disabled = false;
+      btn.textContent = '🐔 Nouvelle prédiction';
+
+      if(chickenLeft <= 0){
+        setTimeout(requirePayment, 1500);
+      }
+    });
+  }, totalDelay);
+}
+
+function animateChicken(targetIdx, callback){
+  const track = document.getElementById('roadTrack');
+  const chick = document.getElementById('chickenChar');
+
+  let current = -1; // start: before any manhole
+
+  function hopToNext(){
+    current++;
+    if(current > targetIdx){
+      // Done
+      callback();
+      return;
+    }
+
+    // Hop animation on chicken
+    chick.className = 'chicken-char hop';
+    setTimeout(()=>{ chick.className='chicken-char'; },350);
+
+    // Mark previous manholes as safe-passed
+    for(let i=0; i<current; i++){
+      const mh = document.getElementById('mh'+i);
+      if(mh && !mh.classList.contains('reached')){
+        mh.className = 'manhole safe-passed';
+        const badge = document.getElementById('badge'+i);
+        if(badge) badge.className = 'cr-mult-badge passed';
+      }
+    }
+
+    // Mark current manhole
+    const curMH = document.getElementById('mh'+current);
+    const curBadge = document.getElementById('badge'+current);
+
+    if(current === targetIdx){
+      // Reached!
+      curMH.className = 'manhole reached';
+      if(curBadge) curBadge.className = 'cr-mult-badge target';
+      // Move chicken visually to this manhole
+      moveChickenToMH(chick, curMH, ()=>{ callback(); });
+    } else {
+      curMH.className = 'manhole safe-passed';
+      if(curBadge) curBadge.className = 'cr-mult-badge passed';
+      // Schedule next hop
+      setTimeout(hopToNext, 420 + Math.random()*80);
+    }
+  }
+
+  // Start first hop
+  setTimeout(hopToNext, 300);
+}
+
+function moveChickenToMH(chick, mhEl, callback){
+  // Move chicken to sit on top of the target manhole
+  const track = document.getElementById('roadTrack');
+  const trackRect = track.getBoundingClientRect();
+  const chickRect = chick.getBoundingClientRect();
+  const mhRect = mhEl.getBoundingClientRect();
+
+  const dx = mhRect.left - chickRect.left + (mhRect.width/2 - chickRect.width/2);
+
+  chick.style.transform = `translateX(${dx}px)`;
+  chick.style.transition = 'transform 0.35s cubic-bezier(.4,0,.2,1)';
+  chick.className = 'chicken-char hop';
+
+  setTimeout(()=>{
+    chick.className = 'chicken-char';
+    if(callback) callback();
+  }, 400);
+}
+
+// ===== NAVIGATION =====
 function backToGame(){
   go('s3','s2');
 }
@@ -464,32 +883,39 @@ function checkPass(){
   paymentRequired = false;
   aviLeft=5;
   mineLeft=5;
+  chickenLeft=5;
   aviAnalyzing=false;
   mineAnalyzing=false;
+  chickenAnalyzing=false;
 
+  // Reset aviator
   document.getElementById('coeff-ring').className='coeff-ring';
   document.getElementById('cval').textContent='—';
   document.getElementById('clbl').textContent='En attente';
   document.getElementById('dots').classList.add('hidden');
-
   const ab=document.getElementById('avi-btn');
   ab.disabled=false;
   ab.className='round-btn';
   ab.innerHTML='Obtenir<br>le coefficient';
 
+  // Reset mines
   for(let i=0;i<25;i++){
     const c=document.getElementById('mc'+i);
-    c.className='cell';
-    c.textContent='';
+    c.className='cell';c.textContent='';
   }
-
   document.getElementById('bnum').textContent='—';
   document.getElementById('mstatus').className='mine-status';
   document.getElementById('mstatus').textContent='Appuyez pour analyser';
-
   const mb=document.getElementById('mine-btn');
-  mb.disabled=false;
-  mb.textContent='💣 Détecter les mines';
+  mb.disabled=false;mb.textContent='💣 Détecter les mines';
+
+  // Reset chicken
+  resetChickenScene();
+  document.getElementById('chickenStatus').className='chicken-status';
+  document.getElementById('chickenStatus').textContent='Appuyez pour analyser';
+  document.getElementById('chickenResult').classList.add('hidden');
+  const cb=document.getElementById('chicken-btn');
+  cb.disabled=false;cb.textContent='🐔 Prédire le parcours';
 
   document.getElementById('passInput').value='';
   document.getElementById('passErr').classList.add('hidden');
